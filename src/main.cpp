@@ -1,20 +1,26 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-#define MOTOR1_SPEED 5
-#define MOTOR1_1 6
-#define MOTOR1_2 7
+#define MOTOR1_SPEED 9
+#define MOTOR1_1 8
+#define MOTOR1_2 10
 
-#define MOTOR2_SPEED 10
-#define MOTOR2_1 9
-#define MOTOR2_2 8
+#define MOTOR2_SPEED 11
+#define MOTOR2_1 13
+#define MOTOR2_2 12
+
+#define MOTOR3_SPEED 3
+#define MOTOR3_1 4
+#define MOTOR3_2 2
+
+#define MOTOR4_SPEED 5
+#define MOTOR4_1 6
+#define MOTOR4_2 7
 
 #define BLUETOOTH_RX 2
 #define BLUETOOTH_TX 3
 
-#define SPEED_COEF 3
-
-SoftwareSerial BTSerial(BLUETOOTH_RX, BLUETOOTH_TX);
+#define SPEED_COEF 2
 
 int speed = 255;
 
@@ -22,8 +28,7 @@ void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
 
-  BTSerial.begin(9600);
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   pinMode(MOTOR1_SPEED, OUTPUT);
   pinMode(MOTOR1_1, OUTPUT);
@@ -32,6 +37,14 @@ void setup()
   pinMode(MOTOR2_SPEED, OUTPUT);
   pinMode(MOTOR2_1, OUTPUT);
   pinMode(MOTOR2_2, OUTPUT);
+
+  pinMode(MOTOR3_SPEED, OUTPUT);
+  pinMode(MOTOR3_1, OUTPUT);
+  pinMode(MOTOR3_2, OUTPUT);
+
+  pinMode(MOTOR4_SPEED, OUTPUT);
+  pinMode(MOTOR4_1, OUTPUT);
+  pinMode(MOTOR4_2, OUTPUT);
 }
 
 void stop()
@@ -43,6 +56,14 @@ void stop()
   digitalWrite(MOTOR2_1, LOW);
   digitalWrite(MOTOR2_2, LOW);
   analogWrite(MOTOR2_SPEED, 0);
+
+  digitalWrite(MOTOR3_1, LOW);
+  digitalWrite(MOTOR3_2, LOW);
+  analogWrite(MOTOR3_SPEED, 0);
+
+  digitalWrite(MOTOR4_1, LOW);
+  digitalWrite(MOTOR4_2, LOW);
+  analogWrite(MOTOR4_SPEED, 0);
 }
 
 void forward()
@@ -54,6 +75,14 @@ void forward()
   digitalWrite(MOTOR2_1, LOW);
   digitalWrite(MOTOR2_2, HIGH);
   analogWrite(MOTOR2_SPEED, speed);
+
+  digitalWrite(MOTOR3_1, LOW);
+  digitalWrite(MOTOR3_2, HIGH);
+  analogWrite(MOTOR3_SPEED, speed);
+
+  digitalWrite(MOTOR4_1, LOW);
+  digitalWrite(MOTOR4_2, HIGH);
+  analogWrite(MOTOR4_SPEED, speed);
 }
 
 void backward()
@@ -65,79 +94,135 @@ void backward()
   digitalWrite(MOTOR2_1, HIGH);
   digitalWrite(MOTOR2_2, LOW);
   analogWrite(MOTOR2_SPEED, speed);
+
+  digitalWrite(MOTOR3_1, HIGH);
+  digitalWrite(MOTOR3_2, LOW);
+  analogWrite(MOTOR3_SPEED, speed);
+
+  digitalWrite(MOTOR4_1, HIGH);
+  digitalWrite(MOTOR4_2, LOW);
+  analogWrite(MOTOR4_SPEED, speed);
 }
 
 void left()
 {
-  digitalWrite(MOTOR1_1, HIGH);
-  digitalWrite(MOTOR1_2, LOW);
+  digitalWrite(MOTOR2_1, HIGH);
+  digitalWrite(MOTOR2_2, LOW);
+  analogWrite(MOTOR2_SPEED, speed);
+
+  digitalWrite(MOTOR4_1, HIGH);
+  digitalWrite(MOTOR4_2, LOW);
+  analogWrite(MOTOR4_SPEED, speed);
+
+  digitalWrite(MOTOR1_1, LOW);
+  digitalWrite(MOTOR1_2, HIGH);
   analogWrite(MOTOR1_SPEED, speed);
 
-  digitalWrite(MOTOR2_1, LOW);
-  digitalWrite(MOTOR2_2, HIGH);
-  analogWrite(MOTOR2_SPEED, speed);
+  digitalWrite(MOTOR3_1, LOW);
+  digitalWrite(MOTOR3_2, HIGH);
+  analogWrite(MOTOR3_SPEED, speed);
 }
 
 void right()
 {
-  digitalWrite(MOTOR1_1, LOW);
-  digitalWrite(MOTOR1_2, HIGH);
-  analogWrite(MOTOR1_SPEED, speed);
-
-  digitalWrite(MOTOR2_1, HIGH);
-  digitalWrite(MOTOR2_2, LOW);
-  analogWrite(MOTOR2_SPEED, speed);
-}
-
-void forwardLeft()
-{
-  digitalWrite(MOTOR1_1, LOW);
-  digitalWrite(MOTOR1_2, HIGH);
-  analogWrite(MOTOR1_SPEED, speed);
-
-  digitalWrite(MOTOR2_1, LOW);
-  digitalWrite(MOTOR2_2, HIGH);
-  analogWrite(MOTOR2_SPEED, speed / SPEED_COEF);
-}
-
-void forwardRight()
-{
-  digitalWrite(MOTOR1_1, LOW);
-  digitalWrite(MOTOR1_2, HIGH);
-  analogWrite(MOTOR1_SPEED, speed / SPEED_COEF);
-
   digitalWrite(MOTOR2_1, LOW);
   digitalWrite(MOTOR2_2, HIGH);
   analogWrite(MOTOR2_SPEED, speed);
-}
 
-void backwardLeft()
-{
+  digitalWrite(MOTOR4_1, LOW);
+  digitalWrite(MOTOR4_2, HIGH);
+  analogWrite(MOTOR4_SPEED, speed);
+
   digitalWrite(MOTOR1_1, HIGH);
   digitalWrite(MOTOR1_2, LOW);
   analogWrite(MOTOR1_SPEED, speed);
 
+  digitalWrite(MOTOR3_1, HIGH);
+  digitalWrite(MOTOR3_2, LOW);
+  analogWrite(MOTOR3_SPEED, speed);
+}
+
+void forwardLeft()
+{
+  digitalWrite(MOTOR2_1, LOW);
+  digitalWrite(MOTOR2_2, HIGH);
+  analogWrite(MOTOR2_SPEED, speed / SPEED_COEF);
+
+  digitalWrite(MOTOR4_1, LOW);
+  digitalWrite(MOTOR4_2, HIGH);
+  analogWrite(MOTOR4_SPEED, speed / SPEED_COEF);
+
+  digitalWrite(MOTOR1_1, LOW);
+  digitalWrite(MOTOR1_2, HIGH);
+  analogWrite(MOTOR1_SPEED, speed);
+
+  digitalWrite(MOTOR3_1, LOW);
+  digitalWrite(MOTOR3_2, HIGH);
+  analogWrite(MOTOR3_SPEED, speed);
+}
+
+void forwardRight()
+{
+  digitalWrite(MOTOR2_1, LOW);
+  digitalWrite(MOTOR2_2, HIGH);
+  analogWrite(MOTOR2_SPEED, speed);
+
+  digitalWrite(MOTOR4_1, LOW);
+  digitalWrite(MOTOR4_2, HIGH);
+  analogWrite(MOTOR4_SPEED, speed);
+
+  digitalWrite(MOTOR1_1, LOW);
+  digitalWrite(MOTOR1_2, HIGH);
+  analogWrite(MOTOR1_SPEED, speed / SPEED_COEF);
+
+  digitalWrite(MOTOR3_1, LOW);
+  digitalWrite(MOTOR3_2, HIGH);
+  analogWrite(MOTOR3_SPEED, speed / SPEED_COEF);
+}
+
+void backwardLeft()
+{
   digitalWrite(MOTOR2_1, HIGH);
   digitalWrite(MOTOR2_2, LOW);
   analogWrite(MOTOR2_SPEED, speed / SPEED_COEF);
+
+  digitalWrite(MOTOR4_1, HIGH);
+  digitalWrite(MOTOR4_2, LOW);
+  analogWrite(MOTOR4_SPEED, speed / SPEED_COEF);
+
+  digitalWrite(MOTOR1_1, HIGH);
+  digitalWrite(MOTOR1_2, LOW);
+  analogWrite(MOTOR1_SPEED, speed);
+
+  digitalWrite(MOTOR3_1, HIGH);
+  digitalWrite(MOTOR3_2, LOW);
+  analogWrite(MOTOR3_SPEED, speed);
 }
 
 void backwardRight()
 {
   digitalWrite(MOTOR1_1, HIGH);
   digitalWrite(MOTOR1_2, LOW);
-  analogWrite(MOTOR1_SPEED, speed / SPEED_COEF);
+  analogWrite(MOTOR1_SPEED, speed);
+
+  digitalWrite(MOTOR3_1, HIGH);
+  digitalWrite(MOTOR3_2, LOW);
+  analogWrite(MOTOR3_SPEED, speed);
 
   digitalWrite(MOTOR2_1, HIGH);
   digitalWrite(MOTOR2_2, LOW);
-  analogWrite(MOTOR2_SPEED, speed);
+  analogWrite(MOTOR2_SPEED, speed / SPEED_COEF);
+
+  digitalWrite(MOTOR4_1, HIGH);
+  digitalWrite(MOTOR4_2, LOW);
+  analogWrite(MOTOR4_SPEED, speed / SPEED_COEF);
 }
 
 void loop()
 {
-  if (BTSerial.available())
+  if (Serial.available())
   {
-    char command = BTSerial.read();
+    char command = Serial.read();
 
     stop();
 
